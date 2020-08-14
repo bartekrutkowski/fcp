@@ -17,14 +17,14 @@ trends and competing projects.
 
 ## Problem Discussion
 
-Over the years FreeBSD has introduced new security features. Most of them
-was left disabled by default and was not exposed nor advertised to the users
+Over the years FreeBSD has introduced new security features.  Most of them
+was left disabled by default, and was not exposed nor advertised to the users
 in any significant manner, making their discovery and usage harder for less
 experienced or new users unless they knew what they wanted and what they were
 looking for.
 
-With every major exploit happening (list: shockshell, bleeds, etc) the demand
-for better security defaults increases and the market expectations are moving
+With every major exploit happening (list: shellshock, bleeds, etc) the demand
+for better security defaults increases, and the market expectations are moving
 towards these operating systems that are more proactive towards their security.
 
 At the same time, the typical use case of Unix/Linux systems changed
@@ -33,11 +33,11 @@ be in past and systems delivering one service, architecture promoted by the
 microservices paradigm, away from big, multi-service, multi-process monolithic
 systems.
 
-This increased market interest in security and change in how operating systems
+This increased market interest in security, and change in how operating systems
 are being used makes the main argument used in past for not enabling these
 available features by default due to users convenience not valid anymore.
 
-Another major argument in past was relative new-ness some of these features
+Another major argument in past was relative new-ness some of these features,
 and uncertainty with regards to their safety and stability due to lack of
 extensive testing and usage.
 
@@ -52,9 +52,9 @@ security.bsd.see_other_uids=1
 security.bsd.see_other_gids=1
 ```
 
-The above kernel defaults are available since (find the release and date)
-and are completely safe to use, stable and not making much sense in todays
-non user focused, microservice oriented system deployments.
+The above kernel defaults are available since 5.0-RELEASE, and are completely
+safe to use, stable and not making much sense in todays non user focused,
+microservice oriented system deployments.
 
 In addition to the above, lagging behind the trends in security exposees
 the FreeBSD Project to a lot of bad press and resonates strongly in the open
@@ -73,6 +73,12 @@ security.bsd.unprivileged_read_msgbuf=0
 security.bsd.unprivileged_proc_debug=0
 kern.randompid=(to be randomly generated)
 machdep.hyperthreading_allowed=0
+kern.elf32.aslr.pie_enable=1
+kern.elf32.aslr.enable=1
+kern.elf64.aslr.pie_enable=1
+kern.elf64.aslr.enable=1
+vm.cluster_anon=2
+net.inet.ip.random_id=1
 ```
 
 ## Solution Discussion
@@ -83,14 +89,16 @@ and to not violate the POLA.
 
 Following are the proposed steps of implementation:
 
-0. Acceptance of this FCP
-1. Announcement on the relevant mailing lists (list: propose mailing lists)
-2. Commits landing in CURRENT
-3. Announcement on FreeBSD Twitter accounts
-4. Announcement/article on the FreeBSD website
-5. Commits MFC
-6. Announcement on remaining channels (Reddit, FreeSBD forums, etc.)
-7. FreeBSD 13.0-RELEASE with new defaults
+0. Acceptance of this FCP.
+1. Announcement on the relevant mailing lists (at least on current@, hackers@,
+   and security@).
+2. Commits landing in CURRENT before branching stable/13, no MFC is planned.
+3. Announcement on FreeBSD Twitter accounts.
+4. Announcement/article on the FreeBSD website.
+5. Announcement on remaining channels (Reddit, FreeSBD forums, etc.).
+6. FreeBSD 13.0-RELEASE with new defaults.
+7. Turn off (in HEAD) sysctls that interfere with debugging after stable/13
+   is branched (TBD).
 
 ## Final Disposition
 
